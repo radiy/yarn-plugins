@@ -7,7 +7,7 @@ Build a Docker image for a workspace.
 Install the latest plugin.
 
 ```sh
-yarn plugin import https://github.com/Dcard/yarn-plugins/releases/latest/download/plugin-docker-build.js
+yarn plugin import https://github.com/radiy/yarn-plugins/releases/latest/download/plugin-docker-build.js
 ```
 
 ## Dockerfile

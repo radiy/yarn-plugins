@@ -1,11 +1,11 @@
 import { Workspace } from '@yarnpkg/core';
-import { PortablePath, toFilename, ppath, xfs } from '@yarnpkg/fslib';
+import { PortablePath, ppath, xfs } from '@yarnpkg/fslib';
 
 export default async function getDockerFilePath(
   workspace: Workspace,
   filename = 'Dockerfile',
 ): Promise<PortablePath> {
-  const path = toFilename(filename);
+  const path = filename as PortablePath;
 
   if (ppath.isAbsolute(path)) {
     return path;

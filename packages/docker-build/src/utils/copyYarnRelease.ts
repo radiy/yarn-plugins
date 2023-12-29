@@ -10,7 +10,7 @@ export default async function copyYarnRelease({
   project: Project;
   report: Report;
 }): Promise<void> {
-  const src = project.configuration.get('yarnPath');
+  const src = project.configuration.get('yarnPath')!;
   const path = ppath.relative(project.cwd, src);
   const dest = ppath.join(destination, path);
 

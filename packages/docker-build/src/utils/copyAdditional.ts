@@ -1,8 +1,8 @@
-import { PortablePath, xfs, ppath, toFilename } from '@yarnpkg/fslib';
+import { PortablePath, xfs, ppath } from '@yarnpkg/fslib';
 import { Report } from '@yarnpkg/core';
 
 function resolvePath(baseDir: PortablePath, inputPath: string): PortablePath {
-  const path = toFilename(inputPath);
+  const path = inputPath as PortablePath;
 
   if (ppath.isAbsolute(path)) {
     return ppath.relative(baseDir, path);

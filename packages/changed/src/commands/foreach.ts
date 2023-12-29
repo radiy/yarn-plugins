@@ -1,5 +1,5 @@
 import { FilterCommand } from './filter';
-import { Command } from 'clipanion';
+import { Command, Option } from 'clipanion';
 import {
   Configuration,
   Project,
@@ -9,26 +9,21 @@ import {
 import { WorkspaceRequiredError } from '@yarnpkg/cli';
 
 export default class ChangedForeachCommand extends FilterCommand {
-  @Command.String()
-  commandName!: string;
+  static paths = [['changed', 'foreach']];
 
-  @Command.Proxy()
-  args: string[] = [];
+  commandName = Option.String();
 
-  @Command.Boolean('-v,--verbose')
-  verbose = false;
+  args = Option.Proxy();
 
-  @Command.Boolean('-p,--parallel')
-  parallel = false;
+  verbose = Option.Boolean('-v,--verbose', false);
 
-  @Command.Boolean('-i,--interlaced')
-  interlaced = false;
+  parallel = Option.Boolean('-p,--parallel', false);
 
-  @Command.Boolean('-t,--topological')
-  topological = false;
+  interlaced = Option.Boolean('-i,--interlaced', false);
 
-  @Command.String('-j,--jobs')
-  jobs?: number;
+  topological = Option.Boolean('-t,--topological', false);
+
+  jobs = Option.String('-j,--jobs');
 
   public static usage = Command.Usage({
     description: 'Run a command on changed workspaces and their dependents',
@@ -49,7 +44,6 @@ export default class ChangedForeachCommand extends FilterCommand {
     ],
   });
 
-  @Command.Path('changed', 'foreach')
   public async execute(): Promise<number> {
     const configuration = await Configuration.find(
       this.context.cwd,
@@ -88,7 +82,7 @@ export default class ChangedForeachCommand extends FilterCommand {
           (acc, ws) => [
             ...acc,
             '--include',
-            structUtils.stringifyIdent(ws.locator),
+            structUtils.stringifyIdent(ws.anchoredLocator),
           ],
           [] as string[],
         ),
